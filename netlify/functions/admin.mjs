@@ -1,7 +1,9 @@
-import { store, listWeek, json, isAdmin } from "../lib/shared.mjs";
+import { store, listWeek, json, isAdmin, hasPassword } from "../lib/shared.mjs";
 
 // GET — список поточного тижня; DELETE ?id=... — видалити запис
 export default async (req) => {
+  if (!hasPassword())
+    return json({ error: "На сервері не задано ADMIN_PASSWORD. Додай змінну в Netlify і зроби новий деплой." }, 503);
   if (!isAdmin(req)) {
     await new Promise((r) => setTimeout(r, 800));
     return json({ error: "Невірний пароль." }, 401);

@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Відробки — списки кафедри</title>
-<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="icon" href="/logo.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <div class="strip"><div class="in"><span>Кафедра ортопедичної стоматології</span><span class="tag">Для викладачів</span></div></div>
 <header class="head"><div class="in">
-  <img src="/logo.svg" alt="ІФНМУ">
+  <img src="/logo.png" alt="ІФНМУ">
   <div class="brand"><b>Івано-Франківський</b><small>національний медичний університет</small></div>
   <div class="dept">Списки на відробку</div>
 </div></header>
@@ -35,7 +35,13 @@
     <div class="step"><span>🔒</span>Вхід для кафедри</div>
     <div class="msg" id="lerr" hidden></div>
     <label for="p">Пароль</label>
-    <input type="password" id="p" autocomplete="current-password" required>
+    <div class="pw">
+      <input type="password" id="p" autocomplete="current-password" required>
+      <button type="button" class="eye" id="eye" aria-label="Показати пароль" aria-pressed="false">
+        <svg class="open" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        <svg class="shut" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7c2 0 3.7.7 5.1 1.6M22 12s-3.6 7-10 7c-2 0-3.7-.7-5.1-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="M3 3l18 18"/></svg>
+      </button>
+    </div>
     <button class="btn" style="margin-top:18px;width:100%">Увійти <span class="arrow">→</span></button>
   </form>
 
@@ -68,9 +74,9 @@ let tab = "stom"; try { tab = localStorage.getItem("vtab") || "stom"; } catch {}
 let data = null;
 
 async function api(method = "GET", id = "") {
-  const res = await fetch("/api/admin" + (id ? "?id=" + encodeURIComponent(id) : ""), { method, headers: { "x-admin-password": pass }, cache: "no-store" });
+  const res = await fetch("/api/admin" + (id ? "?id=" + encodeURIComponent(id) : ""), { method, headers: { "x-admin-password": encodeURIComponent(pass) }, cache: "no-store" });
   const out = await res.json();
-  if (!res.ok) throw new Error(out.error || "Помилка");
+  if (!res.ok) throw Object.assign(new Error(out.error || "Помилка"), { status: res.status });
   return out;
 }
 const rowsOf = (t) => data.rows.filter((r) => r.track === t);
@@ -96,11 +102,20 @@ async function load() {
   } catch (e) {
     $("login").hidden = false; $("panel").hidden = true;
     if (pass) { $("lerr").textContent = e.message; $("lerr").hidden = false; }
+    // невірний пароль не зберігаємо — щоб після оновлення сторінки не підставлявся знову
+    if (e.status === 401) { pass = ""; try { sessionStorage.removeItem("vp"); } catch {} }
   }
 }
 
-$("login").onsubmit = (e) => { e.preventDefault(); pass = $("p").value; try { sessionStorage.setItem("vp", pass); } catch {} load(); };
+$("login").onsubmit = (e) => { e.preventDefault(); pass = $("p").value.trim(); try { sessionStorage.setItem("vp", pass); } catch {} load(); };
 document.querySelectorAll(".tab").forEach((b) => b.onclick = () => { tab = b.dataset.t; try { localStorage.setItem("vtab", tab); } catch {} render(); });
+$("eye").onclick = () => {
+  const show = $("p").type === "password";
+  $("p").type = show ? "text" : "password";
+  $("eye").setAttribute("aria-pressed", show);
+  $("eye").setAttribute("aria-label", show ? "Сховати пароль" : "Показати пароль");
+  $("p").focus();
+};
 $("refresh").onclick = load;
 $("logout").onclick = () => { pass = ""; try { sessionStorage.removeItem("vp"); } catch {} location.reload(); };
 $("list").onclick = async (e) => {

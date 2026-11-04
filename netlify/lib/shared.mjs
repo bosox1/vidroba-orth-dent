@@ -61,9 +61,13 @@ export const json = (data, status = 200) =>
     status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
   });
 
+export const hasPassword = () => Boolean((process.env.ADMIN_PASSWORD || "").trim());
+
 export function isAdmin(req) {
-  const pass = process.env.ADMIN_PASSWORD;
-  const got = req.headers.get("x-admin-password") || "";
+  const pass = (process.env.ADMIN_PASSWORD || "").trim();
+  let got = req.headers.get("x-admin-password") || "";
+  try { got = decodeURIComponent(got); } catch {}
+  got = got.trim();
   if (!pass || got.length !== pass.length) return false;
   let diff = 0;
   for (let i = 0; i < pass.length; i++) diff |= pass.charCodeAt(i) ^ got.charCodeAt(i);
