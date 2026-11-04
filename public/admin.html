@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Відробки — кафедра</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <div class="crest">ІФНМУ</div>
+  <div class="name">Івано-Франківський національний медичний університет<small>Відробки — сторінка кафедри</small></div>
+</div></div>
+
+<section class="hero"><div class="in">
+  <div class="eyebrow">Для викладачів</div>
+  <h1 id="title">Список на відробку</h1>
+  <p id="sub">Увійди, щоб побачити, хто записався.</p>
+</div></section>
+
+<main class="wrap">
+  <form class="card" id="login" style="max-width:420px">
+    <h2>Вхід</h2>
+    <div class="msg bad" id="lerr" hidden></div>
+    <label for="p">Пароль кафедри</label>
+    <input id="p" type="password" autocomplete="current-password" required>
+    <button class="btn">Увійти</button>
+  </form>
+
+  <section id="panel" hidden>
+    <div class="noprint" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+      <button class="btn gold" style="margin:0" onclick="print()">Друк</button>
+      <button class="btn ghost" style="margin:0" id="csv">Excel (CSV)</button>
+      <button class="btn ghost" style="margin:0" id="refresh">Оновити</button>
+      <button class="btn ghost" style="margin:0" id="logout">Вийти</button>
+    </div>
+    <div class="card"><div class="tablewrap" id="list"></div></div>
+  </section>
+</main>
+<footer class="noprint">Список автоматично очищається щопонеділка ввечері.</footer>
+
+<script>
+const M = ["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
+const uaDate = (ymd) => { const [y,m,d] = ymd.split("-").map(Number); return `${d} ${M[m-1]}`; };
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+let pass = ""; try { pass = sessionStorage.getItem("vp") || ""; } catch {}
+let data = null;
+
+async function api(method = "GET", id = "") {
+  const res = await fetch("/api/admin" + (id ? "?id=" + encodeURIComponent(id) : ""), { method, headers: { "x-admin-password": pass }, cache: "no-store" });
+  const out = await res.json();
+  if (!res.ok) throw new Error(out.error || "Помилка");
+  return out;
+}
+
+function render() {
+  $("title").textContent = "Відробка " + uaDate(data.week);
+  $("sub").textContent = `Записалося: ${data.rows.length}`;
+  if (!data.rows.length) { $("list").innerHTML = '<p style="margin:0;color:var(--muted)">Поки що ніхто не записався.</p>'; return; }
+  $("list").innerHTML = `<table><tr><th>№</th><th>ПІБ</th><th>Група</th><th>Тема</th><th>Пропуск</th><th>Контакт</th><th class="noprint"></th></tr>` +
+    data.rows.map((r, i) => `<tr><td>${i + 1}</td><td>${esc(r.name)}</td><td>${esc(r.grp)}</td><td>${esc(r.topic)}</td>
+      <td>${r.missed ? esc(r.missed.split("-").reverse().slice(0, 2).join(".")) : ""}</td><td>${esc(r.contact)}</td>
+      <td class="noprint"><button class="btn ghost" style="margin:0;padding:6px 10px;color:var(--err)" data-id="${esc(r.id)}" title="Видалити">✕</button></td></tr>`).join("") + "</table>";
+}
+
+async function load() {
+  try {
+    data = await api();
+    $("login").hidden = true; $("panel").hidden = false; render();
+  } catch (e) {
+    $("login").hidden = false; $("panel").hidden = true;
+    if (pass) { $("lerr").textContent = e.message; $("lerr").hidden = false; }
+  }
+}
+
+$("login").onsubmit = (e) => { e.preventDefault(); pass = $("p").value; try { sessionStorage.setItem("vp", pass); } catch {} load(); };
+$("refresh").onclick = load;
+$("logout").onclick = () => { pass = ""; try { sessionStorage.removeItem("vp"); } catch {} location.reload(); };
+$("list").onclick = async (e) => {
+  const id = e.target.closest("button[data-id]")?.dataset.id;
+  if (id && confirm("Видалити запис?")) { await api("DELETE", id); load(); }
+};
+$("csv").onclick = () => {
+  const q = (s) => `"${String(s ?? "").replace(/"/g, '""')}"`;
+  const lines = [["№","ПІБ","Група","Тема","Дата пропуску","Контакт","Записався"].map(q).join(";"),
+    ...data.rows.map((r, i) => [i + 1, r.name, r.grp, r.topic, r.missed, r.contact, r.created].map(q).join(";"))];
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" }));
+  a.download = `vidrobka-${data.week}.csv`; a.click();
+};
+if (pass) load();
+setInterval(() => { if (!$("panel").hidden) load(); }, 60000);
+</script>
+</body>
+</html>

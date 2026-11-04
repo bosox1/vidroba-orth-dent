@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Запис на відробку — ІФНМУ</title>
+<meta name="description" content="Запис на відробку пропущених занять, Івано-Франківський національний медичний університет">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <div class="crest">ІФНМУ</div>
+  <div class="name">Івано-Франківський національний медичний університет<small id="dept">Кафедра ортопедичної стоматології</small></div>
+</div></div>
+
+<section class="hero"><div class="in">
+  <div class="eyebrow">Відробки пропущених занять</div>
+  <h1>Запис на відробку</h1>
+  <p>Відробки проходять щопонеділка. Запишись заздалегідь, щоб викладач знав, кого чекати і з якої теми.</p>
+</div></section>
+
+<main class="wrap"><div class="grid">
+  <aside class="card">
+    <h2>Найближча відробка</h2>
+    <ul class="facts">
+      <li><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+        <div><div class="k">Дата</div><div class="v" id="date">…</div></div></li>
+      <li><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <div><div class="k">Час</div><div class="v" id="time">…</div></div></li>
+      <li><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+        <div><div class="k">Місце</div><div class="v" id="place">…</div></div></li>
+      <li id="capRow" hidden><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span>
+        <div><div class="k">Вільних місць</div><div class="v" id="cap">…</div></div></li>
+    </ul>
+    <p class="note" id="resetNote">Список оновлюється щопонеділка ввечері — після цього запис іде на наступний тиждень.</p>
+  </aside>
+
+  <section class="card">
+    <div id="done" hidden>
+      <div class="msg ok" id="doneMsg">Готово! Тебе записано.</div>
+      <p>Візьми з собою залікову книжку і підготуйся з теми заняття.</p>
+      <button class="btn ghost" id="again" type="button">Записати ще одну тему</button>
+    </div>
+    <form id="f" novalidate>
+      <h2>Реєстрація</h2>
+      <div class="msg bad" id="err" hidden></div>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <label for="name">Прізвище, імʼя, по батькові</label>
+      <input id="name" name="name" required autocomplete="name">
+      <div class="row">
+        <div><label for="grp">Курс і група</label><input id="grp" name="grp" required placeholder="напр. 3 курс, 12 гр."></div>
+        <div><label for="missed">Дата пропуску <span class="hint">(необовʼязково)</span></label><input id="missed" name="missed" type="date"></div>
+      </div>
+      <label for="topic">Тема пропущеного заняття</label>
+      <input id="topic" name="topic" required>
+      <label for="contact">Телефон або Telegram <span class="hint">(необовʼязково)</span></label>
+      <input id="contact" name="contact">
+      <button class="btn" id="submit" type="submit">Записатися</button>
+    </form>
+  </section>
+</div></main>
+<footer>© Івано-Франківський національний медичний університет</footer>
+
+<script>
+const months = ["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
+const uaDate = (ymd) => { const [y,m,d] = ymd.split("-").map(Number); return `Понеділок, ${d} ${months[m-1]}`; };
+const $ = (id) => document.getElementById(id);
+let info = null;
+
+async function loadInfo() {
+  try {
+    info = await (await fetch("/api/info", { cache: "no-store" })).json();
+    $("date").textContent = uaDate(info.week);
+    $("time").textContent = info.time;
+    $("place").textContent = info.place;
+    $("dept").textContent = info.department;
+    $("resetNote").textContent = `Список оновлюється щопонеділка о ${info.resetHour}:00 — після цього запис іде на наступний тиждень. Дані зберігаються лише до відробки.`;
+    if (info.capacity > 0) {
+      const left = Math.max(0, info.capacity - info.taken);
+      $("capRow").hidden = false; $("cap").textContent = `${left} з ${info.capacity}`;
+      if (!left) { $("submit").disabled = true; showErr("На цей понеділок місць уже немає."); }
+    }
+  } catch { $("date").textContent = "не вдалося завантажити"; }
+}
+function showErr(t) { $("err").textContent = t; $("err").hidden = !t; }
+
+$("f").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target));
+  if (!data.name.trim() || !data.grp.trim() || !data.topic.trim()) return showErr("Заповни ПІБ, групу і тему заняття.");
+  showErr(""); $("submit").disabled = true; $("submit").textContent = "Надсилаю…";
+  try {
+    const res = await fetch("/api/register", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(data) });
+    const out = await res.json();
+    if (!res.ok) throw new Error(out.error || "Помилка");
+    $("doneMsg").textContent = `Готово! Тебе записано на відробку: ${uaDate(out.week || info.week).toLowerCase()} о ${out.time || info.time}.`;
+    $("f").hidden = true; $("done").hidden = false;
+    e.target.querySelector("#topic").value = ""; e.target.querySelector("#missed").value = "";
+    loadInfo();
+  } catch (er) { showErr(er.message); }
+  finally { $("submit").disabled = false; $("submit").textContent = "Записатися"; }
+});
+$("again").onclick = () => { $("done").hidden = true; $("f").hidden = false; $("topic").focus(); };
+loadInfo();
+</script>
+</body>
+</html>
