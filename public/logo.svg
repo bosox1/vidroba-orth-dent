@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 110" fill="#C0172A">
+  <!-- Спрощений знак ІФНМУ. Заміни цей файл на офіційний logo.svg -->
+  <path d="M8 0h14v8h10V0h14v8h8V0h14v8h10V0h14v22H8z"/>
+  <path d="M8 30h22v48l-22-12z"/>
+  <path d="M70 30h22v36l-22 12z"/>
+  <path d="M36 30h28v12l-14 10-14-10z"/>
+  <path d="M36 56l14 10 14-10v42l-14 12-14-12z"/>
+</svg>

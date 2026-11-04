@@ -3,106 +3,201 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Запис на відробку — ІФНМУ</title>
-<meta name="description" content="Запис на відробку пропущених занять, Івано-Франківський національний медичний університет">
+<title>Запис на відробку — кафедра ортопедичної стоматології ІФНМУ</title>
+<meta name="description" content="Запис на відробку пропущених занять на кафедрі ортопедичної стоматології ІФНМУ — щопонеділка о 17:00">
+<meta name="theme-color" content="#c0172a">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div class="topbar"><div class="in">
-  <div class="crest">ІФНМУ</div>
-  <div class="name">Івано-Франківський національний медичний університет<small id="dept">Кафедра ортопедичної стоматології</small></div>
+<div class="strip"><div class="in">
+  <span>Кафедра ортопедичної стоматології</span>
+  <span class="tag">Відробки</span>
 </div></div>
+<header class="head"><div class="in">
+  <img src="/logo.svg" alt="ІФНМУ">
+  <div class="brand"><b>Івано-Франківський</b><small>національний медичний університет</small></div>
+  <div class="dept">Кафедра ортопедичної стоматології</div>
+</div></header>
 
-<section class="hero"><div class="in">
-  <div class="eyebrow">Відробки пропущених занять</div>
-  <h1>Запис на відробку</h1>
-  <p>Відробки проходять щопонеділка. Запишись заздалегідь, щоб викладач знав, кого чекати і з якої теми.</p>
-</div></section>
+<section class="hero">
+  <span class="ball r" style="width:34px;height:34px;left:8%;top:18%;--d:10s"></span>
+  <span class="ball r" style="width:18px;height:18px;left:14%;top:62%;--d:8s;--delay:-2s"></span>
+  <span class="ball w" style="width:44px;height:44px;left:44%;top:10%;--d:12s;--delay:-4s"></span>
+  <span class="ball r" style="width:16px;height:16px;left:52%;top:16%;--d:7s;--delay:-1s"></span>
+  <span class="ball r" style="width:28px;height:28px;left:58%;top:8%;--d:11s;--delay:-3s"></span>
+  <span class="ball w" style="width:40px;height:40px;left:82%;top:40%;--d:13s;--delay:-6s"></span>
+  <span class="ball w" style="width:46px;height:46px;left:70%;top:66%;--d:10s;--delay:-5s"></span>
+  <span class="ball r" style="width:52px;height:52px;right:-14px;top:60%;--d:14s;--delay:-7s"></span>
+  <span class="ball r" style="width:26px;height:26px;left:4%;top:82%;--d:9s;--delay:-2s"></span>
+  <div class="in">
+    <div class="seal reveal"><img src="/logo.svg" alt=""></div>
+    <div>
+      <div class="kicker reveal" style="--rd:.1s">Відробки пропущених занять</div>
+      <h1 class="reveal" style="--rd:.2s">Запис на <em>відробку</em></h1>
+      <p class="reveal" style="--rd:.3s">Щопонеділка на кафедрі ортопедичної стоматології ІФНМУ. Заповни форму заздалегідь, щоб викладач знав, кого чекати.</p>
+      <div class="chips reveal" style="--rd:.4s">
+        <span class="chip"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i><span id="date">Понеділок</span></span>
+        <span class="chip"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i>17:00</span>
+        <span class="chip"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></i>Кафедра ортопедичної стоматології</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-<main class="wrap"><div class="grid">
-  <aside class="card">
-    <h2>Найближча відробка</h2>
-    <ul class="facts">
-      <li><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
-        <div><div class="k">Дата</div><div class="v" id="date">…</div></div></li>
-      <li><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-        <div><div class="k">Час</div><div class="v" id="time">…</div></div></li>
-      <li><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-        <div><div class="k">Місце</div><div class="v" id="place">…</div></div></li>
-      <li id="capRow" hidden><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg></span>
-        <div><div class="k">Вільних місць</div><div class="v" id="cap">…</div></div></li>
-    </ul>
-    <p class="note" id="resetNote">Список оновлюється щопонеділка ввечері — після цього запис іде на наступний тиждень.</p>
-  </aside>
+<main class="wrap">
+  <div class="card reveal" style="--rd:.5s">
+    <form id="f" novalidate>
+      <div class="msg" id="err" hidden></div>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
 
-  <section class="card">
-    <div id="done" hidden>
-      <div class="msg ok" id="doneMsg">Готово! Тебе записано.</div>
-      <p>Візьми з собою залікову книжку і підготуйся з теми заняття.</p>
+      <div class="block">
+        <div class="step"><span>1</span>Де ти навчаєшся?</div>
+        <div class="tracks" role="group" aria-label="Підрозділ">
+          <button type="button" class="track" data-track="stom" aria-pressed="false">
+            <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 3c-2.5 0-4 2-4 4.5 0 3 1.5 4.5 2 7 .5 3 1 6.5 2.5 6.5S9.5 17 10 15c.4-1.4 1-2 2-2s1.6.6 2 2c.5 2 1 6 2.5 6S18.5 17.5 19 14.5c.5-2.5 2-4 2-7C21 5 19.5 3 17 3c-2 0-3 1-5 1S9 3 7 3z"/></svg></span>
+            <b>Стоматологічний факультет ІФНМУ</b><small>2–5 курси</small><span class="count" data-count="stom"></span>
+          </button>
+          <button type="button" class="track" data-track="college" aria-pressed="false">
+            <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg></span>
+            <b>Фаховий медичний коледж ІФНМУ</b><small>2–3 курси</small><span class="count" data-count="college"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="block" id="rest" hidden>
+        <div class="step"><span>2</span>Про тебе</div>
+        <div class="fields">
+          <div class="f-6"><label for="name">Прізвище, імʼя, по батькові</label><input type="text" id="name" name="name" autocomplete="name" placeholder="Петренко Іван Михайлович"></div>
+          <div class="f-3"><span class="lbl">Курс</span><div class="seg" id="courses" role="group" aria-label="Курс"></div></div>
+          <div class="f-3"><label for="grp">Група</label><input type="text" id="grp" name="grp" inputmode="numeric" placeholder="напр. 12"></div>
+        </div>
+
+        <div class="block">
+          <div class="step"><span>3</span>Пропущене заняття</div>
+          <div class="fields">
+            <div class="f-3"><label for="topic">Номер теми</label><input type="number" id="topic" name="topic" min="1" max="200" inputmode="numeric" placeholder="№"></div>
+            <div class="f-3"><label for="missed">Дата пропуску</label><input type="date" id="missed" name="missed"></div>
+            <div class="f-6"><span class="lbl">Причина пропуску</span>
+              <div class="reasons">
+                <label class="reason"><input type="radio" name="reason" value="valid"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Поважна<small>є довідка або підтвердження</small></span></label>
+                <label class="reason"><input type="radio" name="reason" value="invalid"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>Неповажна<small>без підтвердного документа</small></span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <p id="resetNote">Списки оновлюються щопонеділка ввечері — після цього запис іде на наступний тиждень.</p>
+          <button class="btn" id="submit" type="submit">Записатися <span class="arrow">→</span></button>
+        </div>
+      </div>
+    </form>
+
+    <div class="success" id="done" hidden>
+      <svg class="check" viewBox="0 0 96 96"><circle cx="48" cy="48" r="44"/><path d="M28 50l13 13 27-29"/></svg>
+      <h2>Тебе записано!</h2>
+      <p style="color:var(--muted);margin:0">Чекаємо на кафедрі. Підготуйся з теми заняття.</p>
+      <dl class="ticket" id="ticket"></dl><br>
       <button class="btn ghost" id="again" type="button">Записати ще одну тему</button>
     </div>
-    <form id="f" novalidate>
-      <h2>Реєстрація</h2>
-      <div class="msg bad" id="err" hidden></div>
-      <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-      <label for="name">Прізвище, імʼя, по батькові</label>
-      <input id="name" name="name" required autocomplete="name">
-      <div class="row">
-        <div><label for="grp">Курс і група</label><input id="grp" name="grp" required placeholder="напр. 3 курс, 12 гр."></div>
-        <div><label for="missed">Дата пропуску <span class="hint">(необовʼязково)</span></label><input id="missed" name="missed" type="date"></div>
-      </div>
-      <label for="topic">Тема пропущеного заняття</label>
-      <input id="topic" name="topic" required>
-      <label for="contact">Телефон або Telegram <span class="hint">(необовʼязково)</span></label>
-      <input id="contact" name="contact">
-      <button class="btn" id="submit" type="submit">Записатися</button>
-    </form>
-  </section>
-</div></main>
-<footer>© Івано-Франківський національний медичний університет</footer>
+  </div>
+</main>
+<footer>© <b>ІФНМУ</b> · Кафедра ортопедичної стоматології</footer>
 
 <script>
-const months = ["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
-const uaDate = (ymd) => { const [y,m,d] = ymd.split("-").map(Number); return `Понеділок, ${d} ${months[m-1]}`; };
+const M = ["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"];
+const uaDate = (ymd) => { const [y,m,d] = ymd.split("-").map(Number); return `Понеділок, ${d} ${M[m-1]}`; };
 const $ = (id) => document.getElementById(id);
-let info = null;
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const TRACKS = { stom: [2,3,4,5], college: [2,3] };
+let info = null, track = "", course = 0;
 
 async function loadInfo() {
   try {
     info = await (await fetch("/api/info", { cache: "no-store" })).json();
     $("date").textContent = uaDate(info.week);
-    $("time").textContent = info.time;
-    $("place").textContent = info.place;
-    $("dept").textContent = info.department;
-    $("resetNote").textContent = `Список оновлюється щопонеділка о ${info.resetHour}:00 — після цього запис іде на наступний тиждень. Дані зберігаються лише до відробки.`;
-    if (info.capacity > 0) {
-      const left = Math.max(0, info.capacity - info.taken);
-      $("capRow").hidden = false; $("cap").textContent = `${left} з ${info.capacity}`;
-      if (!left) { $("submit").disabled = true; showErr("На цей понеділок місць уже немає."); }
-    }
-  } catch { $("date").textContent = "не вдалося завантажити"; }
+    $("resetNote").textContent = `Списки оновлюються щопонеділка о ${info.resetHour}:00 — після цього запис іде на наступний тиждень.`;
+    for (const k in info.counts) { const el = document.querySelector(`[data-count="${k}"]`); if (el) el.textContent = info.counts[k] ? `записалося: ${info.counts[k]}` : ""; }
+  } catch {}
 }
-function showErr(t) { $("err").textContent = t; $("err").hidden = !t; }
+
+function pick(t) {
+  track = t; course = 0;
+  document.querySelectorAll(".track").forEach((b) => b.setAttribute("aria-pressed", b.dataset.track === t));
+  $("courses").innerHTML = TRACKS[t].map((c) => `<button type="button" data-c="${c}" aria-pressed="false">${c} курс</button>`).join("");
+  const rest = $("rest");
+  if (rest.hidden) { rest.hidden = false; rest.classList.add("reveal"); setTimeout(() => rest.scrollIntoView({ behavior: "smooth", block: "start" }), 120); }
+  showErr("");
+}
+document.querySelectorAll(".track").forEach((b) => b.onclick = () => pick(b.dataset.track));
+$("courses").onclick = (e) => {
+  const b = e.target.closest("button[data-c]"); if (!b) return;
+  course = Number(b.dataset.c);
+  $("courses").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+};
+
+function showErr(t, field) {
+  $("err").textContent = t; $("err").hidden = !t;
+  if (t) $("err").scrollIntoView({ behavior: "smooth", block: "center" });
+  if (field) { field.classList.remove("bad"); void field.offsetWidth; field.classList.add("bad"); field.focus({ preventScroll: true }); }
+}
+document.querySelectorAll("input").forEach((i) => i.addEventListener("input", () => i.classList.remove("bad")));
+
+// ripple на кнопках
+document.addEventListener("pointerdown", (e) => {
+  const b = e.target.closest(".btn"); if (!b || b.disabled) return;
+  const r = b.getBoundingClientRect(), s = document.createElement("span"), d = Math.max(r.width, r.height);
+  s.className = "ripple"; s.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d/2}px;top:${e.clientY - r.top - d/2}px`;
+  b.appendChild(s); setTimeout(() => s.remove(), 600);
+});
+
+function confetti() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const colors = ["#c0172a", "#e8eef7", "#9b1020", "#ffffff", "#f06a76"];
+  for (let i = 0; i < 70; i++) {
+    const c = document.createElement("span");
+    c.className = "confetti";
+    c.style.cssText = `left:${Math.random()*100}vw;background:${colors[i % colors.length]};animation-duration:${2 + Math.random()*2}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random() > .5 ? "50%" : "2px"};box-shadow:0 0 0 1px rgba(0,0,0,.04)`;
+    document.body.appendChild(c); setTimeout(() => c.remove(), 4600);
+  }
+}
 
 $("f").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target));
-  if (!data.name.trim() || !data.grp.trim() || !data.topic.trim()) return showErr("Заповни ПІБ, групу і тему заняття.");
-  showErr(""); $("submit").disabled = true; $("submit").textContent = "Надсилаю…";
+  const fd = new FormData(e.target);
+  const data = { track, course, name: fd.get("name").trim(), grp: fd.get("grp").trim(), topic: fd.get("topic"), missed: fd.get("missed"), reason: fd.get("reason") || "", website: fd.get("website") };
+  if (!track) return showErr("Обери факультет або коледж.");
+  if (data.name.split(/\s+/).length < 2) return showErr("Вкажи прізвище, імʼя та по батькові.", $("name"));
+  if (!course) return showErr("Обери курс.");
+  if (!data.grp) return showErr("Вкажи номер групи.", $("grp"));
+  if (!data.topic) return showErr("Вкажи номер теми.", $("topic"));
+  if (!data.missed) return showErr("Вкажи дату пропуску.", $("missed"));
+  if (!data.reason) return showErr("Познач, поважна чи неповажна причина пропуску.");
+  showErr("");
+  const btn = $("submit"); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Надсилаю…';
   try {
     const res = await fetch("/api/register", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(data) });
     const out = await res.json();
-    if (!res.ok) throw new Error(out.error || "Помилка");
-    $("doneMsg").textContent = `Готово! Тебе записано на відробку: ${uaDate(out.week || info.week).toLowerCase()} о ${out.time || info.time}.`;
-    $("f").hidden = true; $("done").hidden = false;
-    e.target.querySelector("#topic").value = ""; e.target.querySelector("#missed").value = "";
+    if (!res.ok) throw new Error(out.error || "Помилка. Спробуй ще раз.");
+    const [y, m, d] = data.missed.split("-");
+    $("ticket").innerHTML = `<dt>Коли</dt><dd>${esc(uaDate(out.week))}, ${esc(out.time)}</dd>
+      <dt>Де</dt><dd>${esc(out.place)}</dd><dt>Підрозділ</dt><dd>${esc(out.trackTitle)}</dd>
+      <dt>Студент</dt><dd>${esc(data.name)}, ${course} курс, ${esc(data.grp)} гр.</dd>
+      <dt>Тема</dt><dd>№ ${esc(data.topic)} (пропуск ${d}.${m}, ${data.reason === "valid" ? "поважна" : "неповажна"})</dd>`;
+    $("f").hidden = true; $("done").hidden = false; confetti();
+    $("done").scrollIntoView({ behavior: "smooth", block: "center" });
     loadInfo();
   } catch (er) { showErr(er.message); }
-  finally { $("submit").disabled = false; $("submit").textContent = "Записатися"; }
+  finally { btn.disabled = false; btn.innerHTML = 'Записатися <span class="arrow">→</span>'; }
 });
-$("again").onclick = () => { $("done").hidden = true; $("f").hidden = false; $("topic").focus(); };
+$("again").onclick = () => {
+  $("topic").value = ""; $("missed").value = "";
+  document.querySelectorAll('input[name="reason"]').forEach((r) => r.checked = false);
+  $("done").hidden = true; $("f").hidden = false; $("topic").focus();
+};
 loadInfo();
 </script>
 </body>

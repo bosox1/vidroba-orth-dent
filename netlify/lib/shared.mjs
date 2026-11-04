@@ -2,11 +2,16 @@ import { getStore } from "@netlify/blobs";
 
 // ===== Налаштування (можна перевизначити змінними середовища в Netlify) =====
 export const CFG = {
-  department: process.env.DEPARTMENT || "Кафедра ортопедичної стоматології",
-  place: process.env.PLACE || "Аудиторія кафедри",
-  time: process.env.TIME || "15:00",
-  resetHour: Number(process.env.RESET_HOUR || 18),
-  capacity: Number(process.env.CAPACITY || 0), // 0 = без ліміту
+  department: process.env.DEPARTMENT || "Кафедра ортопедичної стоматології ІФНМУ",
+  place: process.env.PLACE || "Кафедра ортопедичної стоматології ІФНМУ",
+  time: process.env.TIME || "17:00",
+  resetHour: Number(process.env.RESET_HOUR || 19),
+};
+
+// Два напрямки — два окремі списки
+export const TRACKS = {
+  stom:    { title: "Стоматологічний факультет ІФНМУ", courses: [2, 3, 4, 5] },
+  college: { title: "Фаховий медичний коледж ІФНМУ",   courses: [2, 3] },
 };
 
 export const store = () => getStore({ name: "vidrobka", consistency: "strong" });
@@ -47,7 +52,7 @@ export async function listWeek() {
       if (r) mine.push({ id: key, ...r });
     }
   }));
-  mine.sort((a, b) => (a.grp + a.name).localeCompare(b.grp + b.name, "uk"));
+  mine.sort((a, b) => (a.course - b.course) || String(a.grp).localeCompare(String(b.grp), "uk", { numeric: true }) || a.name.localeCompare(b.name, "uk"));
   return { week, rows: mine };
 }
 
