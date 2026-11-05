@@ -78,7 +78,7 @@
         <div class="block">
           <div class="step"><span>3</span>Пропущене заняття</div>
           <div class="fields">
-            <div class="f-3"><label for="topic">Номер теми</label><input type="number" id="topic" name="topic" min="1" max="200" inputmode="numeric" placeholder="№"></div>
+            <div class="f-3"><label for="topic">Номер теми <span class="hint">(одна або кілька)</span></label><input type="text" id="topic" name="topic" inputmode="text" autocomplete="off" placeholder="напр. 14, 15 або 14-16"></div>
             <div class="f-3"><label for="missed">Дата пропуску</label><input type="date" id="missed" name="missed"></div>
             <div class="f-6"><span class="lbl">Причина пропуску</span>
               <div class="reasons">
@@ -168,12 +168,13 @@ function confetti() {
 $("f").addEventListener("submit", async (e) => {
   e.preventDefault();
   const fd = new FormData(e.target);
-  const data = { track, course, name: fd.get("name").trim(), grp: fd.get("grp").trim(), topic: fd.get("topic"), missed: fd.get("missed"), reason: fd.get("reason") || "", website: fd.get("website") };
+  const data = { track, course, name: fd.get("name").trim(), grp: fd.get("grp").trim(), topic: fd.get("topic").trim(), missed: fd.get("missed"), reason: fd.get("reason") || "", website: fd.get("website") };
   if (!track) return showErr("Обери факультет або коледж.");
   if (data.name.split(/\s+/).length < 2) return showErr("Вкажи прізвище, імʼя та по батькові.", $("name"));
   if (!course) return showErr("Обери курс.");
   if (!data.grp) return showErr("Вкажи номер групи.", $("grp"));
   if (!data.topic) return showErr("Вкажи номер теми.", $("topic"));
+  if (!/^[\d\s,;.\-–—іта]+$/i.test(data.topic) || !/\d/.test(data.topic)) return showErr("Номер теми — лише цифри, напр. 14, 15 або 14-16.", $("topic"));
   if (!data.missed) return showErr("Вкажи дату пропуску.", $("missed"));
   if (!data.reason) return showErr("Познач, поважна чи неповажна причина пропуску.");
   showErr("");
@@ -186,7 +187,7 @@ $("f").addEventListener("submit", async (e) => {
     $("ticket").innerHTML = `<dt>Коли</dt><dd>${esc(uaDate(out.week))}, ${esc(out.time)}</dd>
       <dt>Де</dt><dd>${esc(out.place)}</dd><dt>Підрозділ</dt><dd>${esc(out.trackTitle)}</dd>
       <dt>Студент</dt><dd>${esc(data.name)}, ${course} курс, ${esc(data.grp)} гр.</dd>
-      <dt>Тема</dt><dd>№ ${esc(data.topic)} (пропуск ${d}.${m}, ${data.reason === "valid" ? "поважна" : "неповажна"})</dd>`;
+      <dt>${/[,–]/.test(out.topic) ? "Теми" : "Тема"}</dt><dd>№ ${esc(out.topic)} (пропуск ${d}.${m}, ${data.reason === "valid" ? "поважна" : "неповажна"})</dd>`;
     $("f").hidden = true; $("done").hidden = false; confetti();
     $("done").scrollIntoView({ behavior: "smooth", block: "center" });
     loadInfo();
